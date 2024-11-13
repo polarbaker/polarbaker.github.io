@@ -19,11 +19,12 @@ html {
 }
 
 body {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     color: #333;
+    line-height: 1.6;
 }
 
 a {
@@ -133,27 +134,53 @@ hr {
 
 .footer {
     text-align: center;
-    margin-top: 2rem;
-    padding: 1rem 0;
-    border-top: 1px solid #d1d5db;
+    margin-top: 4rem;
+    padding: 2rem 0;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
 }
 
-.footer .social-icons {
+.social-links {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 2rem;
+    margin: 2rem 0;
 }
 
-.footer .icon {
-    width: 24px;
-    height: 24px;
+.social-icon {
+    color: #8892b0;
+    transition: all 0.3s ease-in-out;
     display: inline-block;
 }
 
-.footer p {
-    font-size: 0.875rem;
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Smooth hover effect */
+.social-icon:hover {
+    color: #64ffda;  /* Changes color on hover */
+    transform: translateY(-3px);  /* Slight upward movement */
+}
+
+/* Optional: Add a subtle bounce effect */
+.social-icon:active {
+    transform: translateY(0);  /* Returns to original position when clicked */
+}
+
+.cause {
     color: #6b7280;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+
+.copyright {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0;
 }
 
 header {
@@ -165,7 +192,8 @@ header {
 
 nav {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1rem;
 }
 
 nav a {
@@ -220,13 +248,20 @@ footer {
     gap: 1rem;
 }
 
-.vertical-line {
-    color: #f97316; /* Orange color */
-    font-weight: bold;
+.vertical-line, .nav-separator {
+    color: #4A90E2;  /* Professional blue shade */
 }
 
-.nav-separator {
-    color: #f97316; /* Orange color */
+/* Alternative professional blue options if you prefer:
+    #2196F3 - Material Blue
+    #0077CC - LinkedIn Blue
+    #1E90FF - Dodger Blue
+    #3498DB - Flat UI Blue
+*/
+
+/* Optional: Add a subtle glow effect */
+.vertical-line {
+    text-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
 .intro-text {
@@ -241,4 +276,93 @@ footer {
     color: #4b5563;
     margin: 1rem 0;
     line-height: 1.2;
+}
+
+.divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 4rem 0;
+}
+
+.latest {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.latest a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.blog-posts {
+    margin-bottom: 4rem;
+}
+
+.blog-posts h3 {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 2rem;
+}
+
+article {
+    margin-bottom: 2rem;
+}
+
+article h4 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+article h4 a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.date {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.view-all {
+    text-align: left;
+    margin-bottom: 4rem;
+}
+
+.view-all a {
+    color: #333;
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.social-links img {
+    width: 32px;
+    height: 32px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.social-links img:hover {
+    opacity: 1;
+}
+
+footer {
+    text-align: center;
+    margin-top: 4rem;
+    color: #6b7280;
+}
+
+footer p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
 }
