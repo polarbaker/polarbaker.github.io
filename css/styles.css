@@ -469,3 +469,56 @@ footer p {
 .home-link:hover {
     color: #4A90E2;
 }
+
+/* Blog Index Styles */
+.blog-index {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.blog-index h1 {
+    color: #4A90E2;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.blog-preview {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.blog-preview:last-child {
+    border-bottom: none;
+}
+
+.blog-preview h2 {
+    margin-bottom: 0.5rem;
+}
+
+.blog-preview h2 a {
+    color: #4A90E2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-preview h2 a:hover {
+    color: #64ffda;
+}
+
+.blog-preview time {
+    display: block;
+    color: #8892b0;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.blog-preview p {
+    color: #8892b0;
+    margin-bottom: 1rem;
+}
+
+.blog-preview .tags {
+    margin-top: 1rem;
+}
