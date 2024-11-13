@@ -19,11 +19,10 @@ html {
 }
 
 body {
-    max-width: 650px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     color: #333;
 }
 
@@ -158,7 +157,10 @@ hr {
 }
 
 header {
-    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8rem;
 }
 
 nav {
@@ -176,8 +178,9 @@ nav a:hover {
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
 }
 
 h2 {
@@ -209,4 +212,33 @@ footer {
     padding-top: 2rem;
     border-top: 1px solid #eee;
     color: #666;
+}
+
+.name-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.vertical-line {
+    color: #f97316; /* Orange color */
+    font-weight: bold;
+}
+
+.nav-separator {
+    color: #f97316; /* Orange color */
+}
+
+.intro-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #4b5563;
+    margin: 1rem 0;
+    line-height: 1.2;
 }
