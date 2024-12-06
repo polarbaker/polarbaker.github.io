@@ -2,133 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Thomas Baker - Aerospace & AI Expert</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="module" crossorigin src="/ThomasBakerTechPortfolio/assets/index-DMyUSbVK.js"></script>
-  <link rel="stylesheet" crossorigin href="/ThomasBakerTechPortfolio/assets/index-DYeNlJqp.css">
+    <title>Thomas Baker - Tech Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-CihpVScB.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-D7Kbtn9B.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <div class="logo">
+    <!-- Loading indicator for Earth visualization -->
+    <div id="loading">Loading Earth...</div>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
             <h1>Thomas Baker</h1>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#speaking">Speaking Engagements</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#book-me">Book Me</a></li>
-                <li><a href="#contact">Contact Me</a></li>
-            </ul>
-        </nav>
-    </header>
+    </nav>
+
+    <!-- Earth Visualization Container -->
+    <div id="earth-container">
+        <canvas id="three-canvas"></canvas>
+    </div>
 
     <!-- Main Content -->
-    <main>
-        <!-- 3D Animation Section -->
-        <section id="home" class="home-section">
-            <canvas id="three-canvas"></canvas>
-            <div class="overlay">
-                <h2>Welcome to My Universe</h2>
-                <p>Exploring the frontiers of Aerospace, Space, AI, and Robotics.</p>
+    <main class="main-content">
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <h2>About Me</h2>
+                    <p>Hi, I'm Thomas Baker, a passionate software developer with expertise in full-stack development, 
+                       3D visualization, and cloud technologies. I love creating immersive digital experiences and 
+                       solving complex technical challenges.</p>
+                    <p>My journey in tech has led me to work with various technologies including Three.js, React, 
+                       Node.js, and cloud platforms like AWS and Azure.</p>
+                </div>
+                <div class="skills fade-in">
+                    <h3>Technical Skills</h3>
+                    <ul>
+                        <li>Frontend: HTML5, CSS3, JavaScript, React</li>
+                        <li>3D Graphics: Three.js, WebGL</li>
+                        <li>Backend: Node.js, Python, Java</li>
+                        <li>Cloud: AWS, Azure, Docker</li>
+                        <li>Tools: Git, VS Code, Figma</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <!-- About Me Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                I am a proven software engineer and AI developer specializing in the Aerospace and Space industries, as well as AI, Deep Tech, and Robotics. With a passion for pushing technological boundaries, I am dedicated to building innovative solutions that propel us into the future.
-            </p>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio">
-            <h2>Portfolio</h2>
-            <div class="portfolio-gallery">
-                <div class="portfolio-item">
-                    <img src="images/project1.jpg" alt="Project 1">
-                    <div class="portfolio-info">
-                        <h3>Project Title</h3>
-                        <p>Brief description of the project highlighting key features and technologies used.</p>
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card fade-in">
+                    <img src="data:image/jpeg;base64," alt="Project 1" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Earth Visualization</h3>
+                        <p>Interactive 3D Earth visualization using Three.js with realistic textures and lighting.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/polarbaker/ThomasBakerTechPortfolio" target="_blank">GitHub</a>
+                            <a href="https://polarbaker.github.io/ThomasBakerTechPortfolio/" target="_blank">Live Demo</a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Add more project cards as needed -->
             </div>
         </section>
 
-        <!-- Speaking Engagements Section -->
-        <section id="speaking">
-            <h2>Speaking Engagements</h2>
-            <div class="speaking-list">
-                <div class="speaking-item">
-                    <h3>Event Name</h3>
-                    <span class="date">Date of Event</span>
-                    <p>Description of the speaking engagement, topics covered, and audience insights.</p>
-                </div>
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2>Get in Touch</h2>
+            <div class="contact-form fade-in">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
             </div>
-        </section>
-
-        <!-- Blog Section -->
-        <section id="blog">
-            <h2>Blog</h2>
-            <p>Stay tuned for insightful articles on Aerospace, AI, and cutting-edge technologies.</p>
-        </section>
-
-        <!-- Book Me Section -->
-        <section id="book-me">
-            <h2>Book Me for Speaking Gigs</h2>
-            <p>
-                Interested in having me speak at your event? Click the button below to get in touch.
-            </p>
-            <a href="#contact" class="btn">Book Now</a>
-        </section>
-
-        <!-- Contact Me Section -->
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-        
-                <button type="submit">Send Message</button>
-            </form>
         </section>
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="social-links">
-            <a href="https://github.com/polarbaker" aria-label="GitHub" class="social-icon">
-                <!-- GitHub SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
-            <a href="https://linkedin.com/in/thomasbakertech" aria-label="LinkedIn" class="social-icon">
-                <!-- LinkedIn SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
-            <a href="https://twitter.com/TheSpaceBread" aria-label="Twitter" class="social-icon">
-                <!-- Twitter SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
+            <a href="https://github.com/polarbaker" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
         </div>
-        <p>© 2024 Thomas Baker</p>
+        <p>&copy; 2023 Thomas Baker. All rights reserved.</p>
     </footer>
 
     <!-- Scripts -->
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Form submission handler
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            console.log('Form submitted');
+        });
+    </script>
 </body>
 </html>
