@@ -43,6 +43,6 @@ jobs:
             --exclude 'node_modules' \
             --exclude 'src' \
             --delete \
-            space-portfolio/dist/ \
+            dist/ \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:public_html/
           echo "Deployment complete"
