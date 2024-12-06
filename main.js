@@ -1,106 +1,180 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
 
-// Scene setup
+// Performance monitoring
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+
+// Scene setup with fog for depth
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+scene.fog = new THREE.Fog(0x000000, 50, 200);
+
+// Renderer with optimized settings
 const renderer = new THREE.WebGLRenderer({ 
     antialias: true,
-    canvas: document.querySelector('#three-canvas')
+    canvas: document.querySelector('#three-canvas'),
+    powerPreference: "high-performance",
+    precision: "mediump"
 });
 
 // Basic setup
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 scene.background = new THREE.Color(0x000000);
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+// Camera with optimized FOV and draw distance
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 200);
+camera.position.set(0, 2, 15);
+
+// Optimized lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
 directionalLight.position.set(5, 3, 5);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
 scene.add(directionalLight);
 
-// Load all textures
-const textureLoader = new THREE.TextureLoader();
-const earthDayTexture = textureLoader.load('/textures/earth_daymap.jpg');
-const earthNightTexture = textureLoader.load('/textures/earth_nightmap.jpg');
-const earthBumpTexture = textureLoader.load('/textures/earth_bump.jpg');
-const earthSpecularTexture = textureLoader.load('/textures/earth_specular.jpg');
+// Texture loading optimization
+const loadingManager = new THREE.LoadingManager();
+const textureLoader = new THREE.TextureLoader(loadingManager);
 
-// Create Earth
-const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
+// Preload and optimize textures
+const textures = {
+    day: textureLoader.load('/textures/earth_daymap.jpg', optimizeTexture),
+    night: textureLoader.load('/textures/earth_nightmap.jpg', optimizeTexture),
+    bump: textureLoader.load('/textures/earth_bump.jpg', optimizeTexture),
+    specular: textureLoader.load('/textures/earth_specular.jpg', optimizeTexture)
+};
+
+function optimizeTexture(texture) {
+    texture.generateMipmaps = true;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return texture;
+}
+
+// Create Earth with optimized geometry
+const earthGeometry = new THREE.SphereGeometry(5, 48, 48); // Reduced segments
 const earthMaterial = new THREE.MeshPhongMaterial({
-    map: earthDayTexture,
-    bumpMap: earthBumpTexture,
+    map: textures.day,
+    bumpMap: textures.bump,
     bumpScale: 0.15,
-    specularMap: earthSpecularTexture,
+    specularMap: textures.specular,
     specular: new THREE.Color('grey'),
     shininess: 25
 });
 
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+earth.castShadow = true;
+earth.receiveShadow = true;
 scene.add(earth);
 
-// Add atmosphere glow
-const atmosphereGeometry = new THREE.SphereGeometry(5.2, 64, 64);
+// Optimized atmosphere
+const atmosphereGeometry = new THREE.SphereGeometry(5.2, 48, 48);
 const atmosphereMaterial = new THREE.MeshPhongMaterial({
     color: 0x4444ff,
     transparent: true,
     opacity: 0.15,
-    side: THREE.BackSide
+    side: THREE.BackSide,
+    depthWrite: false // Optimization for transparent objects
 });
 const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
 scene.add(atmosphere);
 
-// Add stars
-const starGeometry = new THREE.BufferGeometry();
-const starMaterial = new THREE.PointsMaterial({
-    color: 0xFFFFFF,
-    size: 0.2,
-    sizeAttenuation: true
-});
+// Optimized stars using InstancedMesh
+const starCount = 5000; // Reduced number of stars
+const starGeometry = new THREE.SphereGeometry(0.1, 4, 4); // Simplified geometry
+const starMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+const starInstance = new THREE.InstancedMesh(starGeometry, starMaterial, starCount);
 
-const starVertices = [];
-for(let i = 0; i < 10000; i++) {
-    const x = (Math.random() - 0.5) * 2000;
-    const y = (Math.random() - 0.5) * 2000;
-    const z = (Math.random() - 0.5) * 2000;
-    starVertices.push(x, y, z);
+const dummy = new THREE.Object3D();
+for(let i = 0; i < starCount; i++) {
+    dummy.position.set(
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200
+    );
+    dummy.updateMatrix();
+    starInstance.setMatrixAt(i, dummy.matrix);
 }
+starInstance.instanceMatrix.needsUpdate = true;
+scene.add(starInstance);
 
-starGeometry.setAttribute('position', 
-    new THREE.Float32BufferAttribute(starVertices, 3)
-);
-const stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
-
-// Camera position
-camera.position.set(0, 2, 15);
-
-// Controls
+// Optimized controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.minDistance = 7;
 controls.maxDistance = 20;
+controls.maxPolarAngle = Math.PI / 1.5;
+controls.update();
 
-// Animation
+// Efficient animation loop with delta time
+const clock = new THREE.Clock();
+let previousTime = 0;
+
 function animate() {
-    requestAnimationFrame(animate);
-    earth.rotation.y += 0.002;
+    const elapsedTime = clock.getElapsedTime();
+    const deltaTime = elapsedTime - previousTime;
+    previousTime = elapsedTime;
+
+    // Update earth rotation based on delta time
+    earth.rotation.y += 0.2 * deltaTime;
+    
+    // Update controls
     controls.update();
+
+    // Render scene
     renderer.render(scene, camera);
+
+    // Update stats
+    stats.update();
+
+    requestAnimationFrame(animate);
 }
 
+// Start animation
 animate();
 
-// Handle window resize
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+// Efficient resize handler
+function handleResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
+}
+
+window.addEventListener('resize', handleResize, false);
+
+// Memory management
+window.addEventListener('beforeunload', () => {
+    // Dispose of geometries
+    earthGeometry.dispose();
+    atmosphereGeometry.dispose();
+    starGeometry.dispose();
+
+    // Dispose of materials
+    earthMaterial.dispose();
+    atmosphereMaterial.dispose();
+    starMaterial.dispose();
+
+    // Dispose of textures
+    Object.values(textures).forEach(texture => texture.dispose());
+
+    // Clear scene
+    scene.clear();
+    
+    // Dispose of renderer
+    renderer.dispose();
 });
 
 // Debug logging
