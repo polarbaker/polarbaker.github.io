@@ -233,3 +233,5 @@ window.addEventListener('beforeunload', () => {
 // Debug logging
 console.log('Scene children:', scene.children);
 console.log('Camera position:', camera.position);
+
+// Trigger new deployment - [current date/time]
