@@ -2,131 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Thomas Baker - Aerospace & AI Expert</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="module" crossorigin src="/ThomasBakerTechPortfolio/assets/index-DMyUSbVK.js"></script>
-  <link rel="stylesheet" crossorigin href="/ThomasBakerTechPortfolio/assets/index-DYeNlJqp.css">
+    <meta name="description" content="Thomas Baker - Aerospace, Space, AI, and Robotics Engineer">
+    <title>Thomas Baker - Aerospace & AI Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/ThomasBakerTechPortfolio/assets/main-EeohuxZF.js"></script>
+  <link rel="stylesheet" crossorigin href="/ThomasBakerTechPortfolio/assets/main-lJdmEuTQ.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <div class="logo">
-            <h1>Thomas Baker</h1>
-        </div>
-        <nav>
-            <ul>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">Loading</div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="nav-brand">Thomas Baker</div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Me</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#speaking">Speaking Engagements</a></li>
+                <li><a href="#speaking">Speaking</a></li>
                 <li><a href="#blog">Blog</a></li>
-                <li><a href="#book-me">Book Me</a></li>
-                <li><a href="#contact">Contact Me</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Hero Section with Earth Visualization -->
+    <section id="home" class="hero">
+        <div id="earth-container">
+            <canvas id="earth-canvas"></canvas>
+        </div>
+        <div class="hero-content">
+            <h1>Welcome to My Universe</h1>
+            <p>Exploring the frontiers of Aerospace, Space, AI, and Robotics</p>
+        </div>
+    </section>
+
     <main>
-        <!-- 3D Animation Section -->
-        <section id="home" class="home-section">
-            <canvas id="three-canvas"></canvas>
-            <div class="overlay">
-                <h2>Welcome to My Universe</h2>
-                <p>Exploring the frontiers of Aerospace, Space, AI, and Robotics.</p>
-            </div>
-        </section>
-
-        <!-- About Me Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                I am a proven software engineer and AI developer specializing in the Aerospace and Space industries, as well as AI, Deep Tech, and Robotics. With a passion for pushing technological boundaries, I am dedicated to building innovative solutions that propel us into the future.
-            </p>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio">
-            <h2>Portfolio</h2>
-            <div class="portfolio-gallery">
-                <div class="portfolio-item">
-                    <img src="images/project1.jpg" alt="Project 1">
-                    <div class="portfolio-info">
-                        <h3>Project Title</h3>
-                        <p>Brief description of the project highlighting key features and technologies used.</p>
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p>I am a proven software engineer and AI developer specializing in the Aerospace and Space industries, 
+                        as well as AI, Deep Tech, and Robotics. With a passion for pushing technological boundaries, 
+                        I am dedicated to building innovative solutions that propel us into the future.</p>
+                    </div>
+                    <div class="expertise">
+                        <h3>Areas of Expertise</h3>
+                        <ul class="expertise-list">
+                            <li>Aerospace & Space Technologies</li>
+                            <li>Artificial Intelligence & Deep Learning</li>
+                            <li>Robotics & Automation</li>
+                            <li>Software Engineering</li>
+                            <li>Systems Integration</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Speaking Engagements Section -->
-        <section id="speaking">
-            <h2>Speaking Engagements</h2>
-            <div class="speaking-list">
-                <div class="speaking-item">
-                    <h3>Event Name</h3>
-                    <span class="date">Date of Event</span>
-                    <p>Description of the speaking engagement, topics covered, and audience insights.</p>
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section">
+            <div class="container">
+                <h2>Portfolio</h2>
+                <div class="portfolio-grid">
+                    <!-- Project cards will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Speaking Section -->
+        <section id="speaking" class="section">
+            <div class="container">
+                <h2>Speaking Engagements</h2>
+                <div class="speaking-grid">
+                    <!-- Speaking engagements will be added here -->
                 </div>
             </div>
         </section>
 
         <!-- Blog Section -->
-        <section id="blog">
-            <h2>Blog</h2>
-            <p>Stay tuned for insightful articles on Aerospace, AI, and cutting-edge technologies.</p>
+        <section id="blog" class="section">
+            <div class="container">
+                <h2>Latest Insights</h2>
+                <div class="blog-grid">
+                    <!-- Blog posts will be added here -->
+                </div>
+            </div>
         </section>
 
-        <!-- Book Me Section -->
-        <section id="book-me">
-            <h2>Book Me for Speaking Gigs</h2>
-            <p>
-                Interested in having me speak at your event? Click the button below to get in touch.
-            </p>
-            <a href="#contact" class="btn">Book Now</a>
-        </section>
-
-        <!-- Contact Me Section -->
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-        
-                <button type="submit">Send Message</button>
-            </form>
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Get in Touch</h2>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://github.com/polarbaker" aria-label="GitHub" class="social-icon">
-                <!-- GitHub SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
-            <a href="https://linkedin.com/in/thomasbakertech" aria-label="LinkedIn" class="social-icon">
-                <!-- LinkedIn SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
-            <a href="https://twitter.com/TheSpaceBread" aria-label="Twitter" class="social-icon">
-                <!-- Twitter SVG Icon -->
-                <svg><!-- SVG content --></svg>
-            </a>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-social">
+                    <a href="https://github.com/polarbaker" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">Twitter</a>
+                </div>
+                <p class="footer-copyright">&copy; 2023 Thomas Baker. All rights reserved.</p>
+            </div>
         </div>
-        <p>© 2024 Thomas Baker</p>
     </footer>
 
     <!-- Scripts -->

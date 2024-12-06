@@ -37,7 +37,7 @@ jobs:
         if: success()
         run: |
           echo "Starting deployment..."
-          rsync -avz -e "ssh -p ${{ secrets.PORT }}" \
+          rsync -avvz -e "ssh -p ${{ secrets.PORT }}" \
             --exclude '.git*' \
             --exclude '.github' \
             --exclude 'node_modules' \

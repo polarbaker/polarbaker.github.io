@@ -3,14 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Earth Visualization</title>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-    </style>
+    <title>Thomas Baker - Aerospace, Space, AI, and Robotics</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="three-canvas"></canvas>
-    <script type="module" src="./main.js"></script>
+    <!-- Loading indicator -->
+    <div id="loading">Loading Universe...</div>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <h1>Thomas Baker</h1>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About Me</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#speaking">Speaking</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Earth Visualization Container -->
+    <div id="earth-container">
+        <canvas id="three-canvas"></canvas>
+        <div class="hero-content">
+            <h1>Welcome to My Universe</h1>
+            <p>Exploring the frontiers of Aerospace, Space, AI, and Robotics.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <h2>About Me</h2>
+                    <p>I am a proven software engineer and AI developer specializing in the Aerospace and Space industries, 
+                    as well as AI, Deep Tech, and Robotics. With a passion for pushing technological boundaries, 
+                    I am dedicated to building innovative solutions that propel us into the future.</p>
+                </div>
+                <div class="skills fade-in">
+                    <h3>Technical Expertise</h3>
+                    <ul>
+                        <li>Aerospace & Space Technologies</li>
+                        <li>Artificial Intelligence & Deep Learning</li>
+                        <li>Robotics & Automation</li>
+                        <li>Software Engineering</li>
+                        <li>3D Visualization & Simulation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section">
+            <h2>Portfolio</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card fade-in">
+                    <img src="./assets/images/project1.jpg" alt="Space Visualization" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Interactive Space Visualization</h3>
+                        <p>3D visualization of Earth using Three.js with realistic textures and physics simulation.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/polarbaker/ThomasBakerTechPortfolio" target="_blank">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more projects here -->
+            </div>
+        </section>
+
+        <!-- Speaking Engagements -->
+        <section id="speaking" class="section">
+            <h2>Speaking Engagements</h2>
+            <div class="speaking-grid fade-in">
+                <!-- Add your speaking engagements here -->
+                <p>Coming soon...</p>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <h2>Blog</h2>
+            <div class="blog-grid fade-in">
+                <!-- Add your blog posts here -->
+                <p>Coming soon...</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2>Get in Touch</h2>
+            <div class="contact-form fade-in">
+                <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/polarbaker" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>&copy; 2023 Thomas Baker. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="./js/main.js"></script>
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
 </body>
-</html> 
+</html>

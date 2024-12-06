@@ -4,46 +4,40 @@ import path from 'path';
 
 const textures = {
     'earth_daymap.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg',
-    'earth_nightmap.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_lights_2048.png',
-    'earth_bump.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg',
-    'earth_specular.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg'
+    'earth_normal.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg',
+    'earth_specular.jpg': 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg',
 };
 
-const downloadTexture = (url, filename) => {
+const downloadTexture = (filename, url) => {
     return new Promise((resolve, reject) => {
-        const outputPath = path.join('public', 'textures', filename);
-        console.log(`Downloading ${filename}...`);
-        
+        const filePath = path.join(process.cwd(), 'public', 'textures', filename);
+        const file = fs.createWriteStream(filePath);
+
         https.get(url, (response) => {
-            if (response.statusCode !== 200) {
-                reject(new Error(`Failed to download ${filename}: ${response.statusCode}`));
-                return;
-            }
-
-            const fileStream = fs.createWriteStream(outputPath);
-            response.pipe(fileStream);
-
-            fileStream.on('finish', () => {
-                fileStream.close();
+            response.pipe(file);
+            file.on('finish', () => {
+                file.close();
                 console.log(`Downloaded ${filename}`);
                 resolve();
             });
         }).on('error', (err) => {
-            fs.unlink(outputPath, () => {});
+            fs.unlink(filePath, () => {});
             reject(err);
         });
     });
 };
 
-async function downloadAllTextures() {
+const downloadAllTextures = async () => {
     try {
-        for (const [filename, url] of Object.entries(textures)) {
-            await downloadTexture(url, filename);
-        }
+        const downloads = Object.entries(textures).map(([filename, url]) => 
+            downloadTexture(filename, url)
+        );
+        await Promise.all(downloads);
         console.log('All textures downloaded successfully!');
     } catch (error) {
         console.error('Error downloading textures:', error);
+        process.exit(1);
     }
-}
+};
 
 downloadAllTextures(); 
