@@ -42,14 +42,67 @@ scene.add(directionalLight);
 
 // Texture loading optimization
 const loadingManager = new THREE.LoadingManager();
+
+// Setup loading manager handlers
+loadingManager.onProgress = (url, loaded, total) => {
+    const progress = (loaded / total) * 100;
+    console.log(`Loading: ${progress}%`);
+};
+
+loadingManager.onLoad = () => {
+    console.log('Loading complete!');
+    console.log('Textures:', textures);
+    animate();
+};
+
+loadingManager.onError = (url) => {
+    console.error('Error loading texture:', url);
+};
+
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
-// Preload and optimize textures
+// Add this near your texture loading code
+function loadTexture(url, onError) {
+    return textureLoader.load(
+        url,
+        optimizeTexture,
+        undefined, // onProgress callback
+        () => {
+            console.error(`Failed to load texture: ${url}`);
+            onError?.();
+        }
+    );
+}
+
+// Add this after your texture loading code
+function createFallbackTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 2;
+    canvas.height = 2;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#404040';
+    ctx.fillRect(0, 0, 2, 2);
+    return new THREE.CanvasTexture(canvas);
+}
+
+// Update your textures loading to use this function
 const textures = {
-    day: textureLoader.load('/textures/earth_daymap.jpg', optimizeTexture),
-    night: textureLoader.load('/textures/earth_nightmap.jpg', optimizeTexture),
-    bump: textureLoader.load('/textures/earth_bump.jpg', optimizeTexture),
-    specular: textureLoader.load('/textures/earth_specular.jpg', optimizeTexture)
+    day: loadTexture('/textures/earth_daymap.jpg', () => {
+        console.warn('Failed to load day texture, using fallback');
+        return createFallbackTexture();
+    }),
+    night: loadTexture('/textures/earth_nightmap.jpg', () => {
+        console.warn('Failed to load night texture, using fallback');
+        return createFallbackTexture();
+    }),
+    bump: loadTexture('/textures/earth_bump.jpg', () => {
+        console.warn('Failed to load bump texture, using fallback');
+        return createFallbackTexture();
+    }),
+    specular: loadTexture('/textures/earth_specular.jpg', () => {
+        console.warn('Failed to load specular texture, using fallback');
+        return createFallbackTexture();
+    })
 };
 
 function optimizeTexture(texture) {
