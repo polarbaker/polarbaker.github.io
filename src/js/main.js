@@ -15,6 +15,7 @@ class EarthScene {
     this.earth = null;
     this.stars = null;
     this.textureLoader = new THREE.TextureLoader();
+    this.textureLoader.setPath('./textures/');
 
     this.init();
   }
@@ -61,9 +62,9 @@ class EarthScene {
     const geometry = new THREE.SphereGeometry(2, 64, 64);
     
     // Load Earth textures
-    const dayMap = this.textureLoader.load('/textures/earth_daymap.jpg');
-    const normalMap = this.textureLoader.load('/textures/earth_normal.jpg');
-    const specularMap = this.textureLoader.load('/textures/earth_specular.jpg');
+    const dayMap = this.textureLoader.load('earth_daymap.jpg');
+    const normalMap = this.textureLoader.load('earth_normal.jpg');
+    const specularMap = this.textureLoader.load('earth_specular.jpg');
 
     // Earth material with textures
     const material = new THREE.MeshPhongMaterial({

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/ThomasBakerTechPortfolio/',
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -10,5 +10,10 @@ export default defineConfig({
         main: 'index.html'
       }
     }
+  },
+  server: {
+    port: 5173,
+    strictPort: true,
+    open: true
   }
 }) 
