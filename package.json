@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist -b main -r https://github.com/polarbaker/polarbaker.github.io.git"
+    "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
     "three": "^0.159.0"
