@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'https://unpkg.com/three@0.159.0/build/three.module.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.159.0/examples/jsm/controls/OrbitControls.js';
 
 class EarthScene {
   constructor() {
@@ -24,7 +24,7 @@ class EarthScene {
     this.earth = null;
     this.stars = null;
     this.textureLoader = new THREE.TextureLoader();
-    this.textureLoader.setPath('./textures/');
+    this.textureLoader.setPath('/ThomasBakerTechPortfolio/textures/');
 
     // Initialize scene
     this.init();

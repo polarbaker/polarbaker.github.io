@@ -1,13 +1,7 @@
 import { defineConfig } from 'vite'
-import { resolve } from 'path'
 
 export default defineConfig({
   base: '/ThomasBakerTechPortfolio/',
-  resolve: {
-    alias: {
-      'three': resolve(__dirname, 'node_modules/three')
-    }
-  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -15,11 +9,16 @@ export default defineConfig({
       input: {
         main: 'index.html'
       }
-    }
+    },
+    sourcemap: true
   },
   server: {
     port: 5173,
     strictPort: true,
     open: true
-  }
+  },
+  optimizeDeps: {
+    include: ['three']
+  },
+  publicDir: 'public'
 }) 
