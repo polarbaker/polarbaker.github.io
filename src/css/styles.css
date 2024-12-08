@@ -25,6 +25,8 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
 }
 
 /* Typography */
@@ -106,6 +108,7 @@ nav a:hover {
   width: 100%;
   height: 100%;
   z-index: -1;
+  background: var(--color-bg);
 }
 
 /* Sections */
