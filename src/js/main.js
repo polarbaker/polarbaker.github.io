@@ -1,11 +1,13 @@
-import * as THREE from 'https://unpkg.com/three@0.159.0/build/three.module.js';
-import { OrbitControls } from 'https://unpkg.com/three@0.159.0/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 class EarthScene {
   constructor() {
+    console.log('Initializing EarthScene...');
     // Create canvas if it doesn't exist
     this.canvas = document.querySelector('#earth-canvas');
     if (!this.canvas) {
+      console.log('Creating canvas element...');
       this.canvas = document.createElement('canvas');
       this.canvas.id = 'earth-canvas';
       document.body.insertBefore(this.canvas, document.body.firstChild);
@@ -24,13 +26,13 @@ class EarthScene {
     this.earth = null;
     this.stars = null;
     this.textureLoader = new THREE.TextureLoader();
-    this.textureLoader.setPath('/ThomasBakerTechPortfolio/textures/');
 
     // Initialize scene
     this.init();
   }
 
   init() {
+    console.log('Initializing Earth scene...');
     // Setup renderer
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -66,67 +68,46 @@ class EarthScene {
 
     // Start animation loop
     this.animate();
+    console.log('Earth scene initialized');
   }
 
   createEarth() {
+    console.log('Creating Earth...');
     // Earth geometry
     const geometry = new THREE.SphereGeometry(2, 64, 64);
     
-    // Load Earth textures with error handling
-    const loadTexture = (name) => {
-      return new Promise((resolve) => {
-        this.textureLoader.load(
-          name,
-          (texture) => resolve(texture),
-          undefined,
-          () => {
-            console.warn(`Failed to load texture: ${name}`);
-            resolve(null);
-          }
-        );
-      });
-    };
-
-    // Load all textures
-    Promise.all([
-      loadTexture('earth_daymap.jpg'),
-      loadTexture('earth_normal.jpg'),
-      loadTexture('earth_specular.jpg')
-    ]).then(([dayMap, normalMap, specularMap]) => {
-      // Earth material with textures
-      const material = new THREE.MeshPhongMaterial({
-        map: dayMap,
-        normalMap: normalMap,
-        specularMap: specularMap,
-        normalScale: new THREE.Vector2(0.5, 0.5),
-        shininess: 25
-      });
-
-      this.earth = new THREE.Mesh(geometry, material);
-      
-      // Add atmosphere
-      const atmosphereGeometry = new THREE.SphereGeometry(2.1, 64, 64);
-      const atmosphereMaterial = new THREE.MeshPhongMaterial({
-        color: 0x0077ff,
-        transparent: true,
-        opacity: 0.2,
-        side: THREE.BackSide
-      });
-      const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-      
-      // Create a group for Earth and atmosphere
-      this.earthGroup = new THREE.Group();
-      this.earthGroup.add(this.earth);
-      this.earthGroup.add(atmosphere);
-      
-      // Tilt Earth's axis (23.5 degrees)
-      this.earthGroup.rotation.z = THREE.MathUtils.degToRad(23.5);
-      
-      this.scene.add(this.earthGroup);
+    // Basic material for testing
+    const material = new THREE.MeshPhongMaterial({
+      color: 0x2233ff,
+      shininess: 25
     });
+
+    this.earth = new THREE.Mesh(geometry, material);
+    
+    // Add atmosphere
+    const atmosphereGeometry = new THREE.SphereGeometry(2.1, 64, 64);
+    const atmosphereMaterial = new THREE.MeshPhongMaterial({
+      color: 0x0077ff,
+      transparent: true,
+      opacity: 0.2,
+      side: THREE.BackSide
+    });
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    
+    // Create a group for Earth and atmosphere
+    this.earthGroup = new THREE.Group();
+    this.earthGroup.add(this.earth);
+    this.earthGroup.add(atmosphere);
+    
+    // Tilt Earth's axis (23.5 degrees)
+    this.earthGroup.rotation.z = THREE.MathUtils.degToRad(23.5);
+    
+    this.scene.add(this.earthGroup);
+    console.log('Earth created and added to scene');
   }
 
   createStars() {
+    console.log('Creating stars...');
     const starsGeometry = new THREE.BufferGeometry();
     const starsMaterial = new THREE.PointsMaterial({
       color: 0xFFFFFF,
@@ -145,6 +126,7 @@ class EarthScene {
     starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
     this.stars = new THREE.Points(starsGeometry, starsMaterial);
     this.scene.add(this.stars);
+    console.log('Stars created and added to scene');
   }
 
   onWindowResize() {
@@ -171,6 +153,7 @@ class EarthScene {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, checking WebGL support...');
   // Ensure WebGL is available
   if (!window.WebGLRenderingContext) {
     console.error('WebGL is not available in your browser');
@@ -178,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   try {
+    console.log('Creating Earth scene...');
     new EarthScene();
   } catch (error) {
     console.error('Error initializing Earth scene:', error);
