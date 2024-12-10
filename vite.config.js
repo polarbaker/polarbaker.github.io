@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
 export default defineConfig({
-  base: '/',
+  base: './',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -37,7 +37,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 5173,
+    port: 3000,
     strictPort: true,
     open: true
   },
@@ -50,5 +50,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['three', 'three/examples/jsm/controls/OrbitControls']
-  }
+  },
+  publicDir: 'public'
 }) 
