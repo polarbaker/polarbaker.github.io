@@ -108,36 +108,38 @@ class EarthScene {
     console.log('Creating Earth...');
     const geometry = new THREE.SphereGeometry(2, 128, 128);
     
-    // Fix texture paths - remove 'public' from path since it's served at root
+    // Update paths to match your file structure
     const textureUrls = {
-        day: '/textures/earth_daymap.jpg',
-        night: '/textures/earth_nightmap.jpg',
-        bump: '/textures/earth_bump.jpg',
-        normal: '/textures/earth_normal.jpg',
-        specular: '/textures/earth_specular.jpg'
+        day: './textures/earth_daymap.jpg',      // Changed from /textures to ./textures
+        night: './textures/earth_nightmap.jpg',
+        bump: './textures/earth_bump.jpg',
+        normal: './textures/earth_normal.jpg',
+        specular: './textures/earth_specular.jpg'
     };
 
     console.log('Loading textures from:', textureUrls);
     
-    // Add error logging for texture loading
+    // Add more detailed error logging
     const loadTexture = (url) => {
         return new Promise((resolve, reject) => {
             this.textureLoader.load(
                 url,
                 (texture) => {
-                    console.log(`Successfully loaded texture from ${url}`);
+                    console.log(`✓ Successfully loaded texture: ${url}`);
                     resolve(texture);
                 },
-                undefined,
+                (progressEvent) => {
+                    console.log(`Loading texture ${url}: ${progressEvent}`);
+                },
                 (error) => {
-                    console.error(`Failed to load texture from ${url}:`, error);
+                    console.error(`✗ Failed to load texture: ${url}`, error);
                     reject(error);
                 }
             );
         });
     };
 
-    // Load all textures with better error handling
+    // Enhanced error handling for texture loading
     Promise.all(
         Object.entries(textureUrls).map(([key, url]) => 
             loadTexture(url)
@@ -149,9 +151,15 @@ class EarthScene {
         )
     ).then(results => {
         const textures = {};
+        let loadedCount = 0;
         results.forEach(({ key, texture }) => {
-            textures[key] = texture;
+            if (texture) {
+                loadedCount++;
+                textures[key] = texture;
+            }
         });
+        
+        console.log(`Loaded ${loadedCount}/${Object.keys(textureUrls).length} textures`);
         this.createEarthWithTextures(geometry, textures);
     });
   }
@@ -170,18 +178,16 @@ class EarthScene {
             }
         });
 
-        // Create material with loaded textures - using MeshStandardMaterial instead of MeshPhongMaterial
-        const material = new THREE.MeshStandardMaterial({
-            map: textures.day || null,
-            bumpMap: textures.bump || null,
-            bumpScale: 0.15,
-            normalMap: textures.normal || null,
-            normalScale: new THREE.Vector2(0.2, 0.2),
-            roughnessMap: textures.specular || null,
-            metalness: 0.2,
-            roughness: 0.9,
-            emissive: 0x000000,
-            emissiveIntensity: 0
+        // Create material with loaded textures - using MeshPhongMaterial instead of MeshStandardMaterial
+        const material = new THREE.MeshPhongMaterial({
+            map: textures.day,
+            bumpMap: textures.bump,
+            bumpScale: 0.05,
+            normalMap: textures.normal,
+            normalScale: new THREE.Vector2(0.1, 0.1),
+            specularMap: textures.specular,
+            specular: new THREE.Color(0x333333),
+            shininess: 15
         });
 
         this.earth = new THREE.Mesh(geometry, material);
@@ -225,20 +231,12 @@ class EarthScene {
         this.scene.add(this.earthGroup);
 
         // Add lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
         this.scene.add(ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
-        sunLight.position.set(8, 3, 8);
-        this.scene.add(sunLight);
-
-        const rimLight = new THREE.DirectionalLight(0x223344, 0.2);
-        rimLight.position.set(-8, -3, -8);
-        this.scene.add(rimLight);
-
-        const fillLight = new THREE.DirectionalLight(0x0022ff, 0.1);
-        fillLight.position.set(0, -5, 0);
-        this.scene.add(fillLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight.position.set(5, 3, 5);
+        this.scene.add(directionalLight);
 
         // Hide loading screen when complete
         this.loadingScreen.hide();
