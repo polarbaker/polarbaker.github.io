@@ -76,10 +76,26 @@ class EarthScene {
     // Earth geometry
     const geometry = new THREE.SphereGeometry(2, 64, 64);
     
-    // Basic material for testing
+    // Load textures from public folder
+    const dayTexture = this.textureLoader.load('/textures/earth_daymap.jpg');
+    const bumpTexture = this.textureLoader.load('/textures/earth_bump.jpg');
+    const specularTexture = this.textureLoader.load('/textures/earth_specular.jpg');
+    
+    // Optimize textures
+    [dayTexture, bumpTexture, specularTexture].forEach(texture => {
+        texture.generateMipmaps = true;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+    });
+    
+    // Create material with textures
     const material = new THREE.MeshPhongMaterial({
-      color: 0x2233ff,
-      shininess: 25
+        map: dayTexture,
+        bumpMap: bumpTexture,
+        bumpScale: 0.05,
+        specularMap: specularTexture,
+        specular: new THREE.Color('grey'),
+        shininess: 15
     });
 
     this.earth = new THREE.Mesh(geometry, material);
@@ -87,10 +103,11 @@ class EarthScene {
     // Add atmosphere
     const atmosphereGeometry = new THREE.SphereGeometry(2.1, 64, 64);
     const atmosphereMaterial = new THREE.MeshPhongMaterial({
-      color: 0x0077ff,
-      transparent: true,
-      opacity: 0.2,
-      side: THREE.BackSide
+        color: 0x4444ff,
+        transparent: true,
+        opacity: 0.1,
+        side: THREE.BackSide,
+        depthWrite: false
     });
     const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     
