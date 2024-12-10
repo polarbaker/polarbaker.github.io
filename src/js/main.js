@@ -108,47 +108,51 @@ class EarthScene {
     console.log('Creating Earth...');
     const geometry = new THREE.SphereGeometry(2, 128, 128);
     
-    // Update texture paths to match your file structure
+    // Fix texture paths - remove 'public' from path since it's served at root
     const textureUrls = {
-        day: './public/textures/earth_daymap.jpg',
-        night: './public/textures/earth_nightmap.jpg',
-        bump: './public/textures/earth_bump.jpg',
-        normal: './public/textures/earth_normal.jpg',
-        specular: './public/textures/earth_specular.jpg'
+        day: '/textures/earth_daymap.jpg',
+        night: '/textures/earth_nightmap.jpg',
+        bump: '/textures/earth_bump.jpg',
+        normal: '/textures/earth_normal.jpg',
+        specular: '/textures/earth_specular.jpg'
     };
 
-    // Add debug logging
-    console.log('Attempting to load textures from:', textureUrls);
+    console.log('Loading textures from:', textureUrls);
     
-    const textures = {};
-    let loadedCount = 0;
-    const totalTextures = Object.keys(textureUrls).length;
-
-    // Load each texture with better error handling
-    Object.entries(textureUrls).forEach(([key, url]) => {
-        this.textureLoader.load(
-            url,
-            (texture) => {
-                console.log(`Successfully loaded texture: ${key}`);
-                textures[key] = texture;
-                loadedCount++;
-                
-                const progress = (loadedCount / totalTextures) * 100;
-                this.loadingScreen.updateProgress(progress);
-
-                if (loadedCount === totalTextures) {
-                    this.createEarthWithTextures(geometry, textures);
+    // Add error logging for texture loading
+    const loadTexture = (url) => {
+        return new Promise((resolve, reject) => {
+            this.textureLoader.load(
+                url,
+                (texture) => {
+                    console.log(`Successfully loaded texture from ${url}`);
+                    resolve(texture);
+                },
+                undefined,
+                (error) => {
+                    console.error(`Failed to load texture from ${url}:`, error);
+                    reject(error);
                 }
-            },
-            undefined,
-            (error) => {
-                console.error(`Failed to load texture ${key} from ${url}:`, error);
-                loadedCount++;
-                if (loadedCount === totalTextures) {
-                    this.createEarthWithTextures(geometry, textures);
-                }
-            }
-        );
+            );
+        });
+    };
+
+    // Load all textures with better error handling
+    Promise.all(
+        Object.entries(textureUrls).map(([key, url]) => 
+            loadTexture(url)
+                .then(texture => ({ key, texture }))
+                .catch(error => {
+                    console.error(`Error loading ${key} texture:`, error);
+                    return { key, texture: null };
+                })
+        )
+    ).then(results => {
+        const textures = {};
+        results.forEach(({ key, texture }) => {
+            textures[key] = texture;
+        });
+        this.createEarthWithTextures(geometry, textures);
     });
   }
 
