@@ -655,8 +655,19 @@ function setupNavigation() {
     });
 }
 
+function setupSocialLinks() {
+    const linkedinLink = document.querySelector('.social-link.linkedin');
+    if (linkedinLink) {
+        linkedinLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://www.linkedin.com/in/thomasbakertech/', '_blank');
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setupScrollIndicator();
     setupMobileMenu();
     setupNavigation();
+    setupSocialLinks();
 });
